@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screener Analyst - Free Stock Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: #0A0D12;
+      color: #E7EBEF;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    .hero {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #8B96A4;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: #C9A15C;
+      color: #16120A;
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #C9A15C;
+      border: 1px solid #C9A15C;
+    }
+    .btn-secondary:hover {
+      background: rgba(201, 161, 92, 0.1);
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin: 80px 0;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 20px;
+    }
+    .feature-card {
+      background: #12171F;
+      border: 1px solid #262E39;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .feature-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .feature-desc {
+      font-size: 13px;
+      color: #8B96A4;
+    }
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #576270;
+      font-size: 12px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .footer a {
+      color: #C9A15C;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Screener Analyst</h1>
+    <p class="subtitle">Upload a Chartink screener screenshot and get institutional-grade stock analysis powered by Claude AI. Completely free. No credit card needed.</p>
+    
+    <div class="cta-group">
+      <a href="/screener.html" class="btn btn-primary">Launch App →</a>
+      <a href="https://github.com/YOUR_USERNAME/screener-analyst" target="_blank" class="btn btn-secondary">View on GitHub</a>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Market Analysis</div>
+        <div class="feature-desc">Real-time Nifty, Bank Nifty, FII/DII and sector analysis</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">News Research</div>
+        <div class="feature-desc">Web search for latest news and corporate actions</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Technical Scoring</div>
+        <div class="feature-desc">Multi-factor scoring for every stock</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Entry & Exit</div>
+        <div class="feature-desc">Entry zones, stop loss, and target levels</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚠️</div>
+        <div class="feature-title">Risk Management</div>
+        <div class="feature-desc">Avoid warnings and risk assessment</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">100% Private</div>
+        <div class="feature-desc">Uses your own API key - no server involved</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><strong>How it works:</strong> Paste your Anthropic API key → Upload screenshot → Get analysis</p>
+    <p style="margin-top: 16px;">Get a free API key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> (includes $5 free credit)</p>
+    <p style="margin-top: 16px; color: #8B96A4;">Built with Next.js · Powered by Claude · Hosted for free</p>
+  </div>
+</body>
+</html>
