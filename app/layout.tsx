@@ -20,8 +20,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-black">
-      <body className="antialiased">
-        {children}
+      <body className="antialiased bg-background text-foreground min-h-screen flex flex-col">
+        <a href="#main" className="skip-link">Skip to content</a>
+
+        <header className="border-b border-border">
+          <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" className="text-lg font-semibold">Screener Analyst</a>
+            <nav className="text-sm space-x-4">
+              <a href="#analyze" className="hover:underline">Analyze</a>
+              <a href="#upload" className="hover:underline">Upload</a>
+              <a href="/README_DEPLOY.md" className="hover:underline">Docs</a>
+            </nav>
+          </div>
+        </header>
+
+        <main id="main" className="flex-1 max-w-5xl mx-auto px-4 py-8 w-full">
+          {children}
+        </main>
+
+        <footer className="border-t border-border">
+          <div className="max-w-5xl mx-auto px-4 py-6 text-sm text-muted-foreground flex items-center justify-between">
+            <div>© {new Date().getFullYear()} Screener Analyst</div>
+            <div className="space-x-4">
+              <a href="/privacy" className="hover:underline">Privacy</a>
+              <a href="/terms" className="hover:underline">Terms</a>
+            </div>
+          </div>
+        </footer>
+
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
