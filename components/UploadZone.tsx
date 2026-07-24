@@ -11,6 +11,7 @@ interface UploadZoneProps {
 
 export function UploadZone({ onFileSelect, disabled }: UploadZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (file: File) => {
@@ -66,10 +67,12 @@ export function UploadZone({ onFileSelect, disabled }: UploadZoneProps) {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`relative rounded-lg p-8 sm:p-12 text-center cursor-pointer transition-all duration-300 ${
           isDragOver
-            ? 'border-green-500 bg-green-50/5'
-            : 'border-zinc-600 hover:border-zinc-500'
+            ? 'border-2 border-green-500 bg-green-500/5 scale-[1.02]'
+            : 'dashed-animated'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <input
@@ -81,11 +84,17 @@ export function UploadZone({ onFileSelect, disabled }: UploadZoneProps) {
           className="hidden"
         />
 
-        <div className="flex flex-col items-center gap-3">
-          <Upload className="w-12 h-12 text-zinc-400" />
+        <div className="flex flex-col items-center gap-4">
+          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/10 to-cyan-500/10 flex items-center justify-center transition-all duration-500 ${
+            isDragOver ? 'scale-110 rotate-6 bg-green-500/20' : isHovered ? 'scale-105' : ''
+          }`}>
+            <Upload className={`w-8 h-8 transition-all duration-300 ${
+              isDragOver ? 'text-green-400 -translate-y-1' : isHovered ? 'text-green-400' : 'text-zinc-400'
+            }`} />
+          </div>
           <div>
             <p className="text-lg font-semibold text-zinc-100">
-              Upload Chartink Screener
+              {isDragOver ? 'Drop your file here' : 'Upload Chartink Screener'}
             </p>
             <p className="text-sm text-zinc-400 mt-1">
               Drag and drop your screenshot or click to browse
@@ -94,10 +103,11 @@ export function UploadZone({ onFileSelect, disabled }: UploadZoneProps) {
           <Button
             onClick={() => fileInputRef.current?.click()}
             disabled={disabled}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white"
+            className="mt-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white shadow-lg shadow-green-900/30 transition-all duration-300 hover:shadow-green-500/20 hover:scale-105 active:scale-95"
           >
             Select Image
           </Button>
+          <p className="text-xs text-zinc-600">PNG, JPEG or WebP • Max 10MB</p>
         </div>
       </div>
     </div>
