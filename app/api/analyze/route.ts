@@ -1,8 +1,43 @@
 import { generateText } from 'ai';
+import { z } from 'zod';
 import { SYSTEM_PROMPT } from '@/lib/constants';
 import { AnalysisResponse } from '@/lib/types';
 
 const MAX_ANALYSIS_TIME_MS = 45_000;
+
+const analysisResponseSchema = z.object({
+  marketScore: z.number().min(0).max(10),
+  marketSummary: z.string().min(1),
+  marketRegime: z.enum(['bullish', 'neutral', 'bearish']),
+  sectors: z.array(z.object({
+    name: z.string().min(1),
+    rank: z.number().int().positive(),
+    strength: z.enum(['strong', 'neutral', 'weak']),
+  })),
+  stocks: z.array(z.object({
+    rank: z.number().int().positive(),
+    name: z.string().min(1),
+    symbol: z.string().min(1),
+    score: z.number().min(0).max(10),
+    probability: z.number().min(0).max(100),
+    sector: z.string().min(1),
+    newsRating: z.enum(['positive', 'neutral', 'negative']),
+    entry: z.string().min(1),
+    stopLoss: z.string().min(1),
+    target1: z.string().min(1),
+    target2: z.string().min(1),
+    reasoning: z.string().min(1),
+    avoidIf: z.string(),
+    confidence: z.enum(['high', 'medium', 'low']),
+  })),
+  topPick: z.string(),
+  secondPick: z.string(),
+  thirdPick: z.string(),
+  avoidPick: z.string(),
+  avoidReason: z.string(),
+  watchlist: z.array(z.string()),
+  disclaimer: z.string().min(1),
+});
 
 export async function POST(request: Request) {
   try {
@@ -46,7 +81,7 @@ export async function POST(request: Request) {
               {
                 type: 'image',
                 image: image, // base64 string
-                mimeType: imageMediaType as 'image/png' | 'image/jpeg' | 'image/webp',
+                mediaType: imageMediaType as 'image/png' | 'image/jpeg' | 'image/webp',
               },
               {
                 type: 'text',
@@ -58,7 +93,7 @@ export async function POST(request: Request) {
       });
 
       // Parse the JSON response from Claude
-      let result: Partial<AnalysisResponse>;
+      let result: unknown;
       try {
         // Extract JSON from the response (handle cases where Claude wraps it in markdown)
         const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, text];
@@ -73,11 +108,20 @@ export async function POST(request: Request) {
       }
 
       // Check for error in response
-      if ('error' in result && result.error) {
+      if (typeof result === 'object' && result !== null && 'error' in result && typeof result.error === 'string') {
         return Response.json({ error: result.error }, { status: 400 });
       }
 
-      return Response.json(result);
+      const validation = analysisResponseSchema.safeParse(result);
+      if (!validation.success) {
+        console.error('[v0] Invalid analysis response:', validation.error.issues);
+        return Response.json(
+          { error: 'Analysis response was incomplete. Please try again.' },
+          { status: 502 }
+        );
+      }
+
+      return Response.json(validation.data satisfies AnalysisResponse);
     } catch (error) {
       console.error('[v0] Analysis API error:', error);
 

@@ -57,8 +57,6 @@ export function ScreenerAnalyzer() {
       }));
     }, 5000);
 
-    const analysisAbortController = new AbortController();
-
     try {
       const response = await fetch('/api/analyze', {
         method: 'POST',
@@ -67,7 +65,6 @@ export function ScreenerAnalyzer() {
           image: state.preview.split(',')[1], // Remove data URL prefix
           imageMediaType: state.file?.type || 'image/png',
         }),
-        signal: analysisAbortController.signal,
       });
 
       clearInterval(messageInterval);
@@ -93,15 +90,6 @@ export function ScreenerAnalyzer() {
     } catch (error) {
       clearInterval(messageInterval);
       const errorMessage = error instanceof Error ? error.message : 'Analysis failed';
-      if (error instanceof Error && error.name === 'AbortError') {
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          error: 'Analysis took too long. Please try again.',
-          loadingMessage: '',
-        }));
-        return;
-      }
       setState((prev) => ({
         ...prev,
         loading: false,
@@ -189,7 +177,7 @@ export function ScreenerAnalyzer() {
 
   // Upload state
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div id="analyze" className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Subtle background gradient orbs */}
       <div className="absolute top-1/4 -left-32 w-64 h-64 bg-green-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl" />
@@ -244,7 +232,7 @@ export function ScreenerAnalyzer() {
               </div>
             </div>
           ) : (
-            <div className="animate-fade-in-up-delay-1">
+            <div id="upload" className="animate-fade-in-up-delay-1">
               <UploadZone onFileSelect={handleFileSelect} disabled={state.loading} />
             </div>
           )}

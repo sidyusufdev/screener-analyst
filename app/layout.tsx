@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
@@ -31,15 +30,12 @@ export default function RootLayout({
               </span>
               <span className="text-lg font-semibold text-zinc-100">Screener Analyst</span>
             </a>
-            <nav className="text-sm flex items-center gap-1">
+            <nav aria-label="Primary" className="text-sm flex items-center gap-1">
               <a href="#analyze" className="px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-white/5 transition-all duration-200 relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-green-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">
                 Analyze
               </a>
               <a href="#upload" className="px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-white/5 transition-all duration-200 relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-green-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">
                 Upload
-              </a>
-              <a href="/README_DEPLOY.md" className="px-3 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-white/5 transition-all duration-200 relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-green-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-1/2">
-                Docs
               </a>
             </nav>
           </div>
@@ -52,14 +48,8 @@ export default function RootLayout({
         <footer className="border-t border-border">
           <div className="max-w-5xl mx-auto px-4 py-6 text-sm text-muted-foreground flex items-center justify-between">
             <div>© {new Date().getFullYear()} Screener Analyst</div>
-            <div className="space-x-4">
-              <a href="/privacy" className="hover:underline">Privacy</a>
-              <a href="/terms" className="hover:underline">Terms</a>
-            </div>
           </div>
         </footer>
-
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
