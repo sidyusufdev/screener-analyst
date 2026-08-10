@@ -50,9 +50,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!process.env.AI_GATEWAY_API_KEY && !process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.AI_GATEWAY_API_KEY) {
       return Response.json(
-        { error: 'AI service is not configured. Add AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY to continue.' },
+        { error: 'AI service is not configured. Add AI_GATEWAY_API_KEY to continue.' },
         { status: 503 }
       );
     }
